@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <title>OrdSpill</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+        crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</head>
+
+<style type="text/css">
+    body {
+        overflow: hidden;
+    }
+
+    @keyframes wobble {
+  0% {transform: translateX(0%);}
+  15% {transform: translateX(-12%) rotate(-5deg);}
+  30% {transform: translateX(10%) rotate(3deg);}
+  45% {transform: translateX(-6%) rotate(-3deg);}
+  60% {transform: translateX(5%) rotate(2deg);}
+  75% {transform: translateX(-2%) rotate(-1deg);}
+  100% {transform: translateX(0%);}
+}
+.wobble {
+  animation-name: wobble;
+  animation-duration: 5s;
+  animation-fill-mode: both;
+  animation-iteration-count: infinite;
+}
+
+.CorrectBox {
+    position:fixed;
+    top: 30%;
+    left: 50%;
+    width:30em;
+    height:18em;
+    color: pink;
+    font-size: 72pt; font-family: 'Corben';
+    -webkit-text-stroke: 2px red;
+    display: none;
+
+    }
+
+</style>
+
+<body>
+    <script language="javascript">
+
+        var AllImages = [
+            "./images/agurk.jpg", "./images/åtte.jpg", "./images/bamse.jpg", "./images/banan.jpg",
+            "./images/båt.jpg", "./images/bjørn.jpg", "./images/blomst.png", "./images/bok.png",
+            "./images/bringebær.jpg", "./images/bukse.jpeg", "./images/buss.jpg",
+            "./images/datamaskin.jpg", "./images/delfin.jpg", "./images/dinosaur.jpg",
+            "./images/dør.png", "./images/drill.jpg", "./images/elefant.jpg", "./images/elg.jpg",
+            "./images/en.jpg", "./images/eple.jpeg", "./images/fem.jpg", "./images/fire.jpg",
+            "./images/fiskestang.png", "./images/fisk.png", "./images/gaffel.jpg",
+            "./images/gitar.jpg", "./images/gravemaskin.jpg", "./images/gris.jpg",
+            "./images/grøt.jpg", "./images/hamburger.jpg", "./images/hammer.jpg",
+            "./images/handlevogn.jpeg", "./images/hest.jpg", "./images/hoppetau.jpg",
+            "./images/hus.jpeg", "./images/is.png", "./images/jakke.jpg", "./images/jordbær.jpeg",
+            "./images/juletre.jpg", "./images/kamera.jpg", "./images/kanin.jpg",
+            "./images/kjole.jpg", "./images/kniv.jpg", "./images/krone.jpeg", "./images/løk.jpg",
+            "./images/løve.png", "./images/mais.jpg", "./images/motorsykkel.jpg",
+            "./images/mus.jpg", "./images/ni.jpg", "./images/paprika.jpg", "./images/paraply.jpg",
+            "./images/pizza.jpeg", "./images/potet.jpeg", "./images/puslespill.png",
+            "./images/sag.png", "./images/sandkasse.jpeg", "./images/sau.jpg", "./images/seks.jpg",
+            "./images/sjokolade.png", "./images/sju.jpg", "./images/skje.jpg", "./images/sko.jpg",
+            "./images/snegle.jpg", "./images/sofa.jpg", "./images/sol.jpg", "./images/stjerne.jpeg",
+            "./images/stol.jpeg", "./images/tiger.jpg", "./images/ti.jpg", "./images/tog.jpeg",
+            "./images/to.jpg", "./images/traktor.jpg", "./images/trampoline.jpeg",
+            "./images/tre.jpg", "./images/votter.jpg", "./images/zebra.jpg"];
+
+        window.onload = () => {
+            NewGame();
+        };
+
+        var CurrentWord = "";
+        var CurrentImage = "";
+
+        function CheckAnswer() {
+            if ($("#InputField").val().toUpperCase() != CurrentWord.toUpperCase())
+                return;
+
+            $("#CorrectBox").show();
+            console.log("CORRECT!!");
+            setTimeout(() => NewGame(), 3000);
+        }
+
+        function GetWord(url) {
+            var File = url.substring(url.lastIndexOf('/') + 1);
+            return File.split(".")[0];
+        }
+
+        function NewGame() {
+            $("#CorrectBox").hide();
+            var i = Math.floor((Math.random() * AllImages.length));
+            CurrentWord = GetWord(AllImages[i]);
+            console.log(CurrentWord);
+            CurrentImage = AllImages[i];
+
+            $("#GuessImage").attr("src", CurrentImage);
+            $("#InputField").val("");
+            $("#InputField").focus();
+        }
+    </script>
+
+    <div class="main" style="text-align: center">
+        <div class="content px-4" style="    z-index: 2;        ">
+
+            <link href="https://fonts.googleapis.com/css?family=Corben" rel="stylesheet">
+
+            <style type="text/css">
+                *:focus {
+                    outline: none;
+                }
+            </style>
+
+
+            <div style="display:flex; height: 50vh; align-items: center;justify-content: center;">
+                <img id="GuessImage" src="" style="max-width: 100%; max-height: 100%" />
+            </div>
+
+            <div>
+                <input type="text" id="InputField" value="" onkeyup="CheckAnswer();" onblur="this.focus();" style="text-align: center; font-size: 48pt; font-family: 'Corben'; border-width: 0px; text-transform: uppercase;" />
+            </div>
+
+
+        </div>
+    </div>
+
+    <div class="CorrectBox" id="CorrectBox">
+            <div class="animated wobble">RIKTIG</div>
+    </div>
+
+</body>
+
+</html>
